@@ -3,7 +3,7 @@
 #include <avr/io.h>
 #include <util/setbaud.h>
 
-/* http://www.cs.mun.ca/~rod/Winter2007/4723/notes/serial/serial.html */
+
 
 void uart_init(void) {
     UBRR0H = UBRRH_VALUE;
@@ -19,7 +19,7 @@ void uart_init(void) {
     UCSR0B = _BV(RXEN0) | _BV(TXEN0);   /* Enable RX and TX */
 }
 
-void uart_putchar(char c, FILE *stream) {
+int uart_putchar(char c, FILE *stream) {
     if (c == '\n') {
 	uart_putchar('\r', stream);
     }
@@ -27,7 +27,7 @@ void uart_putchar(char c, FILE *stream) {
     UDR0 = c;
 }
 
-char uart_getchar(FILE *stream) {
+int uart_getchar(FILE *stream) {
     loop_until_bit_is_set(UCSR0A, RXC0);
     return UDR0;
 }
