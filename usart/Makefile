@@ -1,5 +1,5 @@
 PRG = uart
-OBJ = uart.o main.o
+OBJ = uart.o main.o adc.o
 DEFS = -D F_CPU=16000000UL -D BAUD=9600
 MCU_TARGET = atmega328
 LIBS =
@@ -17,6 +17,7 @@ all: $(PRG).elf lst text
 $(PRG).elf: $(OBJ)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^ $(LIBS)
 uart.o: uart.cc
+adc.o: adc.cc
 main.o: main.cc
 clean:
 	rm -rf *.o $(PRG).elf *.eps *.png *.pdf *.bak
