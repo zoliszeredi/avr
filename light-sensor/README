@@ -1,0 +1,4 @@
+Purpose:
+
+The purpose of this program is to determine the light intensity from an analog light sensor.
+Next, the ADC converts the input and sends the value through USART to a USB port.
