@@ -1,7 +1,9 @@
 PRG = lightsensor
 OBJ = main.o sensor.o
-DEFS = "-DF_CPU=1200000UL"
-MCU_TARGET = attiny13
+DEFS = "-DF_CPU=1600000UL"
+MCU_TARGET = atmega328p
+PART_NUMBER = m328p
+ISP = avrisp2
 LIBS =
 CXX = avr-g++
 OPTIMIZE = -Os
@@ -33,4 +35,4 @@ bin: $(PRG).bin
 %.bin: %.elf
 	$(OBJCOPY) -j .text -j .data -O binary $< $@
 flash: $(PRG).hex
-	avrdude -c avrisp2 -p attiny13 -U flash:w:$<
+	avrdude -c $(ISP) -p $(PART_NUMBER) -U flash:w:$<
