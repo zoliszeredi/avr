@@ -5,15 +5,12 @@
 #include "adc.h"
 
 int main(void) {
-  uart_init();
-  stdout = stdin = fdevopen(uart_putchar, uart_getchar);
-  uint16_t counter = 0, value = 0;
-
-  adc_init();
+  uint16_t counter = 0;
+  Converter c;
+  Serial s;
 
   while(1) {
-    value = adc_read(PC5) * 100 / 1024;
-    printf("[%5u] %d\n", counter++, value);
+    s.write("[%5u] %d\n", counter++, c.read_ratio(PC5));
   }
 
   return 0;

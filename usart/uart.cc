@@ -3,7 +3,7 @@
 #include <avr/io.h>
 #include <util/setbaud.h>
 
-
+#include "uart.h"
 
 void uart_init(void) {
     UBRR0H = UBRRH_VALUE;
@@ -31,4 +31,19 @@ int uart_putchar(char c, FILE *stream) {
 int uart_getchar(FILE *stream) {
     loop_until_bit_is_set(UCSR0A, RXC0);
     return UDR0;
+}
+
+
+Serial::Serial() {
+  uart_init();
+  stdout = stdin = fdevopen(uart_putchar, uart_getchar);
+}
+
+uint16_t Serial::write(const char *fmt, ...) {
+  va_list argp;
+  uint16_t count;
+  va_start(argp, fmt);
+  count = vfprintf(stdout, fmt, argp);
+  va_end(argp);
+  return count;
 }

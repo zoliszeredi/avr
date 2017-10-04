@@ -21,3 +21,15 @@ uint16_t adc_read(uint8_t channel) {
   ADCSRA |= _BV(ADIF);
   return (ADC);
 }
+
+Converter::Converter() {
+  adc_init();
+}
+
+uint16_t Converter::read(uint8_t channel) {
+  return adc_read(channel);
+}
+
+uint8_t Converter::read_ratio(uint8_t channel) {
+  return (this->read(channel) * this->scale) >> this->resolution;
+}
